@@ -1,0 +1,176 @@
+﻿composer : Loading 
+composer repositories 
+with package information
+At line:1 char:1
++ composer update 
+--no-interaction 2>&1 | 
+Out-File -FilePath 
+"composer_ ...
++ ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo      
+        : NotSpecified: 
+(Loa    ding 
+compose...age inf    
+ormation:String) [], R  
+  emoteException
+    + 
+FullyQualifiedErrorI    
+d : NativeCommandError
+ 
+https://repo.packagist.o
+rg could not be fully 
+loaded (curl error 28 
+while downloading https:
+//repo.packagist.org/p2/
+illuminate/bus.json: 
+SSL connection 
+timeout), package 
+information was loaded 
+from the local cache 
+and may be out of date
+Updating dependencies
+Lock file operations: 0 
+installs, 1 update, 4 
+removals
+  - Removing barryvdh/la
+ravel-debugbar (v4.2.8)
+  - Removing php-debugba
+r/php-debugbar (v3.7.6)
+  - Removing php-debugba
+r/symfony-bridge 
+(v1.1.0)
+  - Removing 
+symfony/polyfill-php84 
+(v1.37.0)
+  - Downgrading 
+laravel/framework 
+(v12.58.0 => v11.51.0)
+Writing lock file
+Installing dependencies 
+from lock file 
+(including require-dev)
+Package operations: 0 
+installs, 1 update, 4 
+removals
+  - Downloading 
+laravel/framework 
+(v11.51.0)
+    Failed to download 
+laravel/framework from 
+dist: curl error 28 
+while downloading https:
+//codeload.github.com/la
+ravel/framework/legacy.z
+ip/c8f9a04594b7044a189a3
+194cfb3594251eb74e5: 
+Operation timed out 
+after 300006 
+milliseconds with 73087 
+out of 1981092 bytes 
+received
+    Now trying to 
+download from source
+  - Syncing 
+laravel/framework 
+(v11.51.0) into cache
+  - Removing 
+symfony/polyfill-php84 
+(v1.37.0)
+  - Removing php-debugba
+r/symfony-bridge 
+(v1.1.0)
+  - Removing php-debugba
+r/php-debugbar (v3.7.6)
+  - Removing barryvdh/la
+ravel-debugbar (v4.2.8)
+  - Removing 
+laravel/framework 
+(v12.58.0)
+ 0/1 [>---------------] 
+  0%  - Installing 
+laravel/framework 
+(v11.51.0): Cloning 
+c8f9a04594
+    Update of 
+laravel/framework failed
+
+ 1/1 [================] 
+100%
+In Git.php line 595:
+                        
+   
+  Failed to execute git 
+c  
+  lone --no-checkout -- 
+h  
+  
+ttps://ghp...lAa:x-oaut 
+ 
+  
+h-basic@github.com/lara 
+ 
+  vel/framework.git 
+F:\cl  
+  
+ient-api\laravel\vendor 
+ 
+  \laravel/framework    
+   
+                        
+   
+  Cloning into 
+'F:\client  
+  
+-api\laravel\vendor\lar 
+ 
+  avel/framework'...    
+   
+  fatal: unable to 
+access  
+   
+'https://github.com/la  
+  
+ravel/framework.git/':  
+ 
+  Empty reply from 
+server  
+                        
+   
+
+update [--with WITH] 
+[--prefer-source] 
+[--prefer-dist] 
+[--prefer-install 
+PREFER-INSTALL] 
+[--dry-run] [--dev] 
+[--no-dev] [--lock] 
+[--no-install] 
+[--no-audit] 
+[--audit-format 
+AUDIT-FORMAT] 
+[--no-autoloader] 
+[--no-suggest] 
+[--no-progress] [-w|--wi
+th-dependencies] [-W|--w
+ith-all-dependencies] 
+[-v|vv|vvv|--verbose] [-
+o|--optimize-autoloader]
+ [-a|--classmap-authorit
+ative] 
+[--apcu-autoloader] [--a
+pcu-autoloader-prefix 
+APCU-AUTOLOADER-PREFIX] 
+[--ignore-platform-req 
+IGNORE-PLATFORM-REQ] [--
+ignore-platform-reqs] 
+[--prefer-stable] 
+[--prefer-lowest] 
+[-m|--minimal-changes] 
+[--patch-only] 
+[-i|--interactive] 
+[--root-reqs] 
+[--bump-after-update 
+[BUMP-AFTER-UPDATE]] 
+[--] [<packages>...]
+

@@ -1,0 +1,21 @@
+﻿
+   RuntimeException 
+
+  Unable to detect application namespace.
+
+  at vendor\laravel\framework\src\Illuminate\Foundation\Application.php:1733
+    1729Γûò                 }
+    1730Γûò             }
+    1731Γûò         }
+    1732Γûò 
+  Γ₧£ 1733Γûò         throw new RuntimeException('Unable to detect application namespace.');
+    1734Γûò     }
+    1735Γûò }
+    1736Γûò
+
+  1   vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:368
+      Illuminate\Foundation\Application::getNamespace()
+
+  2   vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php:518
+      Illuminate\Foundation\Console\Kernel::load()
+
