@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\Gate;
 class Login
 {
     public function execute(array $data)
@@ -30,16 +30,26 @@ class Login
             ]);
         }
 
-        if ($user->role !== 'admin') {
-            throw ValidationException::withMessages([
-                'email' => ['عذراً، هذا الحساب ليس لديه صلاحيات المسؤول.'],
-            ]);
-        }
+        // Remove hardcoded role check to allow both Admin and Manager
+        // if ($user->role !== 'admin') { ... }
 
-        $token = $user->createToken('AdminAuthToken')->accessToken;
+        // Clear cache to ensure we get fresh permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $token = $user->createToken('AuthToken')->accessToken;
+
+        // Force load roles and permissions to ensure they are available
+        $user->load('roles.permissions');
 
         return [
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role, // Legacy role support
+                'roles' => $user->getRoleNames()->toArray(),
+                'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
+            ],
             'token' => $token,
         ];
     }

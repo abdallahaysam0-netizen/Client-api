@@ -15,14 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string('model_type');
-            $table->unsignedBigInteger('model_id');
-            $table->string('action'); // created, updated, deleted
+            $table->unsignedBigInteger('model_id')->index(); // Added index
+            $table->string('action')->index(); // Added index
             $table->text('description');
             $table->json('old_values')->nullable();
             $table->json('new_values')->nullable();
             $table->string('ip_address')->nullable();
             $table->timestamps();
+            $table->index('created_at'); // Added index for latest() sorting
         });
+
     }
 
     /**

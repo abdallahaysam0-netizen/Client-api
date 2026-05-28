@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\Gate;
 class NoteService
 {
     /**
@@ -20,6 +20,8 @@ class NoteService
      */
     public function getAllNotes(?int $clientId = null): Collection
     {
+        Gate::authorize('view-notes');
+
         if ($clientId) {
             return Note::with('client')->where('client_id', $clientId)->get();
         }
@@ -34,6 +36,8 @@ class NoteService
      */
     public function getNoteById(int $id): Note
     {
+        Gate::authorize('view-notes');
+
         return Note::with('client')->findOrFail($id);
     }
 
@@ -46,6 +50,8 @@ class NoteService
      */
     public function createNote(array $data): Note
     {
+        Gate::authorize('create-notes');
+
         Validator::make($data, [
             'client_id' => 'required|exists:clients,id',
             'note' => 'required|string',
@@ -69,6 +75,8 @@ class NoteService
      */
     public function updateNote(int $id, array $data): Note
     {
+        Gate::authorize('edit-notes');
+
         Validator::make($data, [
             'note' => 'required|string',
         ])->validate();
@@ -86,6 +94,8 @@ class NoteService
      */
     public function deleteNote(int $id): bool
     {
+        Gate::authorize('delete-notes');
+
         $note = Note::findOrFail($id);
         return $note->delete();
     }

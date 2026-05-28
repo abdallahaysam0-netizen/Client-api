@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ];
         });
 
-        $recentNotes = Note::latest()->take(5)->get()->map(function($note) {
+        $recentNotes = Note::with('client')->latest()->take(5)->get()->map(function($note) {
             return [
                 'id' => 'n' . $note->id,
                 'color' => 'bg-amber-500',
@@ -117,28 +117,43 @@ class DashboardController extends Controller
     {
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         
-        $data = Client::select(
+        $driver = DB::getDriverName();
+        $dateField = $driver === 'sqlite' ? "strftime('%m', created_at)" : "DATE_FORMAT(created_at, '%b')";
+        
+        $clientData = Client::select(
             DB::raw('count(id) as total'),
-            DB::raw("DATE_FORMAT(created_at, '%b') as month")
+            DB::raw("$dateField as month")
         )
         ->whereYear('created_at', date('Y'))
         ->groupBy('month')
-        ->get()
-        ->pluck('total', 'month')
-        ->toArray();
+        ->get();
+
+        $noteData = Note::select(
+            DB::raw('count(id) as total'),
+            DB::raw("$dateField as month")
+        )
+        ->whereYear('created_at', date('Y'))
+        ->groupBy('month')
+        ->get();
+
+        // Convert SQLite month numbers (01-12) back to names if necessary
+        if ($driver === 'sqlite') {
+            $clientData = $clientData->pluck('total', 'month')->mapWithKeys(fn($v, $k) => [date('M', mktime(0, 0, 0, (int)$k, 1)) => $v])->toArray();
+            $noteData = $noteData->pluck('total', 'month')->mapWithKeys(fn($v, $k) => [date('M', mktime(0, 0, 0, (int)$k, 1)) => $v])->toArray();
+        } else {
+            $clientData = $clientData->pluck('total', 'month')->toArray();
+            $noteData = $noteData->pluck('total', 'month')->toArray();
+        }
 
         $result = [];
         foreach ($months as $month) {
-            $count = $data[$month] ?? 0;
-            $notesCount = Note::whereYear('created_at', date('Y'))
-                               ->whereMonth('created_at', date('n', strtotime($month)))
-                               ->count();
+            $cCount = $clientData[$month] ?? 0;
+            $nCount = $noteData[$month] ?? 0;
 
             $result[] = [
                 'name' => $month,
-                // نضرب في 100 ليظهر العمود بشكل واضح في الرسم البياني (لأن المقياس يصل لـ 1000)
-                'clients' => $count * 100, 
-                'notes' => $notesCount * 120
+                'clients' => $cCount * 100, 
+                'notes' => $nCount * 120
             ];
         }
         return $result;

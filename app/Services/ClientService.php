@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
+use Illuminate\Support\Facades\Gate;
+
 class ClientService
 {
     /**
@@ -16,6 +18,7 @@ class ClientService
      */
     public function getAllClients(): Collection
     {
+        Gate::authorize('view-clients');
         return Client::all();
     }
 
@@ -39,6 +42,8 @@ class ClientService
      */
     public function createClient(array $data): Client
     {
+        Gate::authorize('create-clients');
+
         Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
@@ -59,6 +64,8 @@ class ClientService
      */
     public function updateClient(int $id, array $data): Client
     {
+        Gate::authorize('edit-clients');
+
         Validator::make($data, [
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|email|unique:clients,email,' . $id,
@@ -79,6 +86,8 @@ class ClientService
      */
     public function deleteClient(int $id): bool
     {
+        Gate::authorize('delete-clients');
+
         $client = Client::findOrFail($id);
         return $client->delete();
     }

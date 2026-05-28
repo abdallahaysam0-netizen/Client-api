@@ -1,0 +1,7 @@
+
+   PASS  Tests\Feature\ClientTest
+  ✓ manager cannot…  0.69s  
+
+  Tests:    1 passed (2 assertions)
+  Duration: 0.86s
+

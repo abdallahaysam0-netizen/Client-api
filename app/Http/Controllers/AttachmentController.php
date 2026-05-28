@@ -46,7 +46,11 @@ class AttachmentController extends Controller
 
     public function update(Request $request, int $id): JsonResponse
     {
-        return response()->json(['message' => 'Update not implemented yet']);
+        $attachment = $this->attachmentService->updateAttachment($id, $request->all(), $request->file('file'));
+        return response()->json([
+            'message' => 'Attachment updated successfully',
+            'data' => $attachment
+        ]);
     }
 
     public function destroy(int $id): JsonResponse
